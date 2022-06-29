@@ -72,53 +72,103 @@ cd ~ user #直接在符号后加上某账户的名称
 7. ；连续指令
 8. /:代表目录，单一的/代表root根目录的意思
 
+# 常用命令
+**万能**：man [命令] 或者 [命令] --help, 遇事不决就用这个。
+不过这两个罗列出来的命令比较多，所以没有耐心的话，还是要记一些常用的。
 
-## 查找文件命令
+## 1. **显示当前路径pwd**
+## 2. **切换目录命令**
+```
+cd ../(或者cd ..)切换到上级目录
+cd /(cd [空格]) 切换到根目录
+cd ~ (或者只有cd)切换到当前用户主目录(home底下以用户名命名的文件夹) /root目录mkdir 创建目录
+cd file1 进入文件夹file1
+```
+## 3. 创建目录命令and创建文件命令
+mkdir 目录名 -p 递归创建目录
+```
+ mkdir file1 新建目录
+ mkdir -p /home/file1/file2/file3 一次性创建多级文件
+```
+创建文件命令
+```
+touch filename
+```
+## 4. 删除目录
+```
+`空目录
+用法：rmdir 目录名
+也可用：rm -rf 目录名`
+例如：
+rmdir fileempty
+rm -rf fileempty
+`非空目录
+-f 强制删除
+-r 删除目录
+常用：rm -rf 文件或目录`
+所以直接用 rm -rf就够了
+```
+```
+删除文件： rm [filename]
+```
+## 5. ls 查看目录或文件信息
+主要选项：
+ls 单纯列出目录和文件的名称
+-l 列出目录或者文件的详细信息。比如权限、修改时间等等
+-a 列出当前目录下所有文件，包括隐藏文件（已点开头的都是隐藏文件）
+![enter image description here](/tencent/api/attachments/s3/url?attachmentid=640170)
+![enter image description here](/tencent/api/attachments/s3/url?attachmentid=640176)
+## 6. vi 文本编辑器
+```
+键入i 进入编辑状态
+退出编辑按ESC键
+不保存退出： :q!
+保存退出： :wq
+输入/，进入搜索
+输入:set nu，显示每一行的行数
+按键盘G，可以直接定位到最末尾
+```
+## 7. 查找文件命令
 
 find是根据文件的属性来查找，grep是根据文件的类型来查找
 文件属性：文件名、文件大小、修改时间、所有者、所属组、是否为空、访问时间
 
-
-1.  `find . //列举该文件夹下面的所有命令` 
-2.  `find [完整的路径] -name  “#.t x t" //查找该路径下面以.txt结尾的文件` 
-3. ```
-find 组合查找
-​
-基本语法：-a 与（去交集）
-​
-• &nbsp; &nbsp; &nbsp; &nbsp;-o 或（去并集）
-​
-         -not 非(同-！）
-​
-•        -！非（同-not)
-find . -name 'file1*' -a -name 'file2*'
 ```
-4. 根基文件类型来查找
-
-
+`find . //列举该文件夹下面的所有命令` 
+`find [完整的路径] -name  “*.txt" //查找该路径下面以.txt结尾的文件` 
+find . -name *.gz //在当前目录查找以gz结尾的文件
+find / -name vinkey在根目录查找以名称为vinkey的文件
+```
++ 根基文件类型来查找
+```
  `find -type f` 
-
-1. 查找关键词
-
-
+查找关键词
  `find . -name &nbsp;'*srm*' # 在当前目录下查找文件名含有srm的` 
-
-
-1. 查找文件的后缀
-
-
+ ```
+ + 查找文件的后缀
 ```
 grep 'test' d* # 显示所有以d开头的文件中包含test的行
-​
 grep 'test' aa bb cc # 显示aa, bb , cc的文件中包含test的行
-​
 grep '[a-z]\{5\}' aa # 显示aa的文件中所有包含每行字符串至少有5个连续小写字符的字符串的行
 grep magic /usr/src # 显示/usr/src目录下的文件（不含子目录）中包含magic的行
 grep -r magic /usr/src # 显示/usr/src目录下的文件（包含子目录）中包含magic的行
 ```
-## tail命令
+## 8. cp 复制
+用法：cp ［选项］文件名或目录 目标地址
+-R 拷贝目录及目录下所有目录和文件
+```
+cp a.txt b.txt 将a文件复制，且另命名为b文件（目录名）
+cp -R a.txt b.txt
+```
+## 9. mv 移动
 
+用法：mv 文件名或目录 目标目录
+mv a.txt ../ 将a文件移动到上级目录（将一个文件移动到另一个目录没有重命名）
+mv a.txt ../b.txt 将a文件移动到上一级并改名为b文件（将一个文件移动到另一个目录并重命名）
+## 10. head命令
+用法： head -n 5 文件名
 
+## 11. tail命令
 - f 循环读取
 - -q 不显示处理信息
 - -v 显示详细的处理信息
@@ -126,21 +176,35 @@ grep -r magic /usr/src # 显示/usr/src目录下的文件（包含子目录）�
 - -n<行数> 显示文件的尾部 n 行内容
 - --pid=PID 与-f合用,表示在进程ID,PID死掉之后结束
 - -q, --quiet, --silent 从不输出给出文件名的首部
-
-
+```
+tail -n 5 文件名 查看后几行
+tail -f error.log 不断刷新，看到最新内容
+```
 默认显示最后10行
 显示文件 notes.log 的内容，从第 20 行至文件末尾:
- `tail -n +20 notes.log` 显示文件 notes.log 的最后 10 个字符:
+ `tail -n +20 notes.log` 
+显示文件 notes.log 的最后 10 个字符:
  `tail -c 10 notes.log` 
 ```
 tail -n 100 /etc/cron &nbsp;#显示最后100行数据
 tail -n -100 /etc/cron #除了前99行不显示外，显示第100行到末尾行
 ```
-
 ```
 tail -n -5 /test001/text001 与 tail -n 5 /test001/text001 
 显示的结果相同，均是文件末尾最后 5 行内容。
 ​
 tail -n +5 /test001/text001 
 显示的内容为从第 5 行开始，直到末尾的内容。tail -n 后面的数字有效输入只有单个数字（5）或者加号连接数字（+5）两种。
-相关链接：https://zhuanlan.zhihu.com/p/101478169
+```
+## 12. netstat 查看网络状况 （net status的简写）
+netstat -apn 查看所有端口
+an，按一定顺序排列输出
+p，表示显示哪个进程在调用
+
+## 13. | 管道符 （竖线，英文输入法状态下shift+键盘上的的|\）
+在命令之间建立管道，将前面命令的输出作为后面命令的输入
+通过命令查找tomcat进程：ps -ef | grep tomcat
+通过命令查找到占用此端口的进程编号：netstat -apn|grep 8080
+# Docker的一些基本知识
+
+http://www.dockerinfo.net/document 
