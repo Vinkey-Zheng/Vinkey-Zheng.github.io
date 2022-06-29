@@ -143,3 +143,4 @@ tail -n -5 /test001/text001 与 tail -n 5 /test001/text001
 ​
 tail -n +5 /test001/text001 
 显示的内容为从第 5 行开始，直到末尾的内容。tail -n 后面的数字有效输入只有单个数字（5）或者加号连接数字（+5）两种。
+相关链接：https://zhuanlan.zhihu.com/p/101478169
