@@ -116,8 +116,7 @@ rm -rf fileempty
 ls 单纯列出目录和文件的名称
 -l 列出目录或者文件的详细信息。比如权限、修改时间等等
 -a 列出当前目录下所有文件，包括隐藏文件（已点开头的都是隐藏文件）
-![enter image description here](/tencent/api/attachments/s3/url?attachmentid=640170)
-![enter image description here](/tencent/api/attachments/s3/url?attachmentid=640176)
+
 ## 6. vi 文本编辑器
 ```
 键入i 进入编辑状态
